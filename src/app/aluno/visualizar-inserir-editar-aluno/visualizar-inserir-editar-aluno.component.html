@@ -1,0 +1,147 @@
+<h1>
+  {{ isEdit ? "Editar" : isViewMode ? "Visualizar" : "Novo(a)" }} Aluno(a)
+</h1>
+<hr />
+<div class="well">
+  <form #formAluno="ngForm">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        name="nome"
+        minlength="2"
+        required
+        [disabled]="isViewMode"
+        placeholder="Digite seu nome..."
+        [(ngModel)]="aluno.nome"
+        autocomplete="off"
+        #nome="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="nome.errors && (nome.dirty || nome.touched)"
+      >
+        <div [hidden]="!nome.errors['required']">
+          Digite o nome do(a) aluno(a).
+        </div>
+        <div [hidden]="!nome.errors['minlength']">
+          O nome do(a) aluno(a) deve conter ao menos 2 caracteres.
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="nome">CPF:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cpf"
+        name="cpf"
+        mask="000.000.000-00"
+        required
+        [(ngModel)]="aluno.cpf"
+        (ngModelChange)="onCpfChange()"
+        placeholder="000.000.000-00"
+        [disabled]="isViewMode || isEdit"
+        autocomplete="off"
+        #cpf="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          (cpf.errors ||
+            cpf.invalid ||
+            !isCpfValid ||
+            (!isEdit && isCpfDuplicated)) &&
+          (cpf.dirty || cpf.touched) &&
+          !isViewMode
+        "
+      >
+        <div [hidden]="!cpf.errors?.['required']">CPF é obrigatório.</div>
+        <div [hidden]="isCpfValid">CPF inválido.</div>
+        <div [hidden]="!isCpfDuplicated">CPF já registrado na base.</div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="nome">E-mail:</label>
+      <input
+        type="text"
+        placeholder="exemplo@domain.com"
+        class="form-control"
+        id="email"
+        name="email"
+        required
+        email
+        [(ngModel)]="aluno.email"
+        [disabled]="isViewMode"
+        autocomplete="off"
+        #email="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          (email.errors || email.invalid) && (email.dirty || email.touched)
+        "
+      >
+        <div [hidden]="!email.errors?.['required']">Digite o e-mail.</div>
+        <div [hidden]="!email.errors?.['email']">
+          Formato de e-mail inválido.
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="nome">Data Nascimento:</label>
+      <input
+        type="date"
+        class="form-control"
+        id="nascimento"
+        name="nascimento"
+        required
+        [(ngModel)]="aluno.dataDeNascimento"
+        [disabled]="isViewMode"
+        autocomplete="off"
+        #nascimento="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="nascimento.errors && (nascimento.dirty || nascimento.touched)"
+      >
+        <div [hidden]="!nascimento.errors['required']">
+          Digite a data de nascimento.
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <div class="row gx-2 gy-2">
+        <div class="col-auto">
+          <button
+            *ngIf="!isViewMode"
+            type="button"
+            class="btn btn-primary"
+            (click)="handleClik()"
+            [disabled]="
+              (!isEdit &&
+                (!formAluno.form.valid ||
+                  !this.isCpfValid ||
+                  this.isCpfDuplicated)) ||
+              (isEdit && !formAluno.form.valid)
+            "
+          >
+            <i class="fa fa-save" aria-hidden="true"></i>
+            {{ isEdit ? "Atualizar" : "Salvar" }}
+          </button>
+        </div>
+        <div class="col-auto">
+          <a [routerLink]="['/alunos']" class="btn btn-secondary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

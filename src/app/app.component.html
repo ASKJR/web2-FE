@@ -1,0 +1,22 @@
+<nav class="nav">
+  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+    >WEB2-FE</a
+  >
+  <a
+    class="nav-link active"
+    aria-current="page"
+    href="#"
+    [routerLink]="['/alunos']"
+    >Alunos(as)</a
+  >
+  <a class="nav-link" href="#" [routerLink]="['/cursos']">Cursos</a>
+</nav>
+<div class="container-fluid">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-12 col-lg">
+        <router-outlet />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<h1>{{ isEdit ? "Editar" : isViewMode ? "Visualizar" : "Novo" }} Curso</h1>
+<hr />
+<div class="well">
+  <form #formCurso="ngForm">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        name="nome"
+        minlength="5"
+        required
+        placeholder="Digite o nome do curso..."
+        [disabled]="isViewMode"
+        [(ngModel)]="curso.nome"
+        #nome="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="nome.errors && (nome.dirty || nome.touched)"
+      >
+        <div [hidden]="!nome.errors['required']">Digite o nome da curso.</div>
+        <div [hidden]="!nome.errors['minlength']">
+          O nome da curso deve conter ao menos 5 caracteres.
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="nome">Link:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="link"
+        name="link"
+        minlength="10"
+        required
+        pattern="https?://.+"
+        placeholder="Digite uma URL válida (https://exemplo.com.br)"
+        [(ngModel)]="curso.link"
+        [disabled]="isViewMode"
+        #link="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="(link.errors || link.invalid) && (link.dirty || link.touched)"
+      >
+        <div [hidden]="!link.errors?.['required']">Digite o nome do link.</div>
+        <div [hidden]="!link.errors?.['minlength']">
+          O nome do link deve conter ao menos 10 caracteres.
+        </div>
+        <div [hidden]="!link.errors?.['pattern']">URL inválida.</div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <div class="row gx-2 gy-2">
+        <div class="col-auto">
+          <button
+            *ngIf="!isViewMode"
+            type="button"
+            class="btn btn-primary"
+            (click)="handleClik()"
+            [disabled]="!formCurso.form.valid"
+          >
+            <i class="fa fa-save" aria-hidden="true"></i>
+            {{ isEdit ? "Atualizar" : "Salvar" }}
+          </button>
+        </div>
+        <div class="col-auto">
+          <a [routerLink]="['/cursos']" class="btn btn-secondary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
