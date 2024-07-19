@@ -38,7 +38,7 @@
         <td>{{ aluno.nome }}</td>
         <td>{{ aluno.cpf }}</td>
         <td>{{ aluno.email }}</td>
-        <td>{{ aluno.dataDeNascimento }}</td>
+        <td>{{ aluno.dataDeNascimento! | mask : "d0/M0/0000" }}</td>
         <td style="width: 350px">
           <div class="row gx-2 gy-2">
             <div class="col-auto">

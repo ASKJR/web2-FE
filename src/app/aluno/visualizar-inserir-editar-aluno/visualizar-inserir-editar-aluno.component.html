@@ -96,14 +96,17 @@
     <div class="form-group">
       <label for="nome">Data Nascimento:</label>
       <input
-        type="date"
+        type="text"
         class="form-control"
         id="nascimento"
         name="nascimento"
+        mask="d0/M0/0000"
         required
+        placeholder="Digite sua data de nascimento no formato dd/MM/yyyy..."
         [(ngModel)]="aluno.dataDeNascimento"
         [disabled]="isViewMode"
         autocomplete="off"
+        minlength="8"
         #nascimento="ngModel"
       />
       <div
@@ -112,6 +115,9 @@
       >
         <div [hidden]="!nascimento.errors['required']">
           Digite a data de nascimento.
+        </div>
+        <div [hidden]="!nascimento.errors['minlength']">
+          A data precisa ter no mínimo 8 caracteres.
         </div>
       </div>
     </div>
