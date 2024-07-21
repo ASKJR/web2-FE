@@ -80,7 +80,7 @@ export class VisualizarInserirEditarAlunoComponent {
     }
   }
   editar(): void {
-    if (this.formAluno.valid && this.isCpfValid) {
+    if (this.formAluno.valid) {
       this.aluno.cpf = cpf.format(this.aluno.cpf!);
       this.alunoService.atualizar(this.aluno);
       Swal.fire({

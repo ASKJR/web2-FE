@@ -7,6 +7,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CursoRoutingModule } from './curso-routing.module';
 import { CrudServiceService } from '../service/crud-service.service';
 import { Curso } from '../shared/models/curso.model';
+import { CURSO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared/types';
 
 @NgModule({
   declarations: [ListarCursoComponent, VisualizarInserirEditarCursoComponent],
@@ -18,8 +19,13 @@ import { Curso } from '../shared/models/curso.model';
   ],
   providers: [
     {
-      provide: CrudServiceService<Curso>,
-      useFactory: () => new CrudServiceService<Curso>('cursos'),
+      provide: CURSO_LOCAL_STORAGE_KEY,
+      useValue: 'cursos',
+    },
+    {
+      provide: CrudServiceService,
+      useFactory: (key: localStorageKey) => new CrudServiceService<Curso>(key),
+      deps: [CURSO_LOCAL_STORAGE_KEY],
     },
   ],
 })

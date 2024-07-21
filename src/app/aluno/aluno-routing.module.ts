@@ -8,19 +8,19 @@ const routes: Routes = [
     component: ListarAlunoComponent,
   },
   {
-    path: 'alunos/listar',
+    path: 'listar',
     component: ListarAlunoComponent,
   },
   {
-    path: 'alunos/novo',
+    path: 'novo',
     component: VisualizarInserirEditarAlunoComponent,
   },
   {
-    path: 'alunos/editar/:id',
+    path: 'editar/:id',
     component: VisualizarInserirEditarAlunoComponent,
   },
   {
-    path: 'alunos/visualizar/:id',
+    path: 'visualizar/:id',
     component: VisualizarInserirEditarAlunoComponent,
   },
 ];

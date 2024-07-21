@@ -8,6 +8,7 @@ import { AlunoRoutingModule } from './aluno-routing.module';
 import { CrudServiceService } from '../service/crud-service.service';
 import { Aluno } from '../shared/models/aluno.model';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { ALUNO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared/types';
 
 @NgModule({
   declarations: [ListarAlunoComponent, VisualizarInserirEditarAlunoComponent],
@@ -21,8 +22,13 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   ],
   providers: [
     {
-      provide: CrudServiceService<Aluno>,
-      useFactory: () => new CrudServiceService<Aluno>('alunos'),
+      provide: ALUNO_LOCAL_STORAGE_KEY,
+      useValue: 'alunos',
+    },
+    {
+      provide: CrudServiceService,
+      useFactory: (key: localStorageKey) => new CrudServiceService<Aluno>(key),
+      deps: [ALUNO_LOCAL_STORAGE_KEY],
     },
     provideNgxMask(),
   ],

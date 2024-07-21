@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'web2-FE';
+  isCollapsed = true;
+
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

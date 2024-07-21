@@ -8,19 +8,19 @@ const routes: Routes = [
     component: ListarCursoComponent,
   },
   {
-    path: 'cursos/listar',
+    path: 'listar',
     component: ListarCursoComponent,
   },
   {
-    path: 'cursos/novo',
+    path: 'novo',
     component: VisualizarInserirEditarCursoComponent,
   },
   {
-    path: 'cursos/editar/:id',
+    path: 'editar/:id',
     component: VisualizarInserirEditarCursoComponent,
   },
   {
-    path: 'cursos/visualizar/:id',
+    path: 'visualizar/:id',
     component: VisualizarInserirEditarCursoComponent,
   },
 ];
