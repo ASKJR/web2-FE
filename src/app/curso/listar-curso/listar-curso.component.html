@@ -44,12 +44,12 @@
                 type="button"
                 class="btn btn-primary"
                 type="button"
-                [routerLink]="['/cursos/visualizar', curso.id]"
+                (click)="abrirCursoModal(curso)"
                 href="#"
                 title="Visualizar"
                 alt="Visualizar"
               >
-                <i class="fa-solid fa-magnifying-glass"></i> Visualizar
+                <i class="fa-regular fa-eye"></i> Visualizar
               </button>
             </div>
             <div class="col-auto">

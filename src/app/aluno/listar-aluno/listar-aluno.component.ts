@@ -2,12 +2,17 @@ import { Component } from '@angular/core';
 import { Aluno } from '../../shared/models/aluno.model';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { CrudServiceService } from '../../service/crud-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../modal/modal.component';
 @Component({
   selector: 'app-listar-aluno',
   templateUrl: './listar-aluno.component.html',
 })
 export class ListarAlunoComponent {
-  constructor(private alunoService: CrudServiceService<Aluno>) {}
+  constructor(
+    private alunoService: CrudServiceService<Aluno>,
+    private modalService: NgbModal
+  ) {}
   alunos: Aluno[] = [];
   ngOnInit(): void {
     this.alunos = this.listarTodos();
@@ -47,5 +52,10 @@ export class ListarAlunoComponent {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sim, remover!',
     };
+  }
+  abrirAlunoModal(aluno: Object) {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.object = aluno;
+    modalRef.componentInstance.title = 'Aluno';
   }
 }
