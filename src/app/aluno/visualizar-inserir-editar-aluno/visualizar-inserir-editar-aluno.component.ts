@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Aluno } from '../../shared/models/aluno.model';
+import { Aluno } from '../../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudServiceService } from '../../service/crud-service.service';
 import { cpf } from 'cpf-cnpj-validator';

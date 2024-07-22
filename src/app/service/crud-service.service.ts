@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Iidentification } from '../shared/interfaces';
-import { ICrud } from '../shared/interfaces';
-import { localStorageKey } from '../shared/types';
-
+import { Iidentification, ICrud, localStorageKey } from '../shared';
 @Injectable({
   providedIn: 'root',
 })

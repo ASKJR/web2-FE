@@ -6,9 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AlunoRoutingModule } from './aluno-routing.module';
 import { CrudServiceService } from '../service/crud-service.service';
-import { Aluno } from '../shared/models/aluno.model';
+import { Aluno, ALUNO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { ALUNO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared/types';
 
 @NgModule({
   declarations: [ListarAlunoComponent, VisualizarInserirEditarAlunoComponent],

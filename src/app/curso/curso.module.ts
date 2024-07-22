@@ -6,8 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CursoRoutingModule } from './curso-routing.module';
 import { CrudServiceService } from '../service/crud-service.service';
-import { Curso } from '../shared/models/curso.model';
-import { CURSO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared/types';
+import { Curso, CURSO_LOCAL_STORAGE_KEY, localStorageKey } from '../shared';
 
 @NgModule({
   declarations: [ListarCursoComponent, VisualizarInserirEditarCursoComponent],

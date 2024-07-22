@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Aluno } from '../../shared/models/aluno.model';
+import { Aluno } from '../../shared';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { CrudServiceService } from '../../service/crud-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
