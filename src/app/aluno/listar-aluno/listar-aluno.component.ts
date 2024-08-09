@@ -15,10 +15,23 @@ export class ListarAlunoComponent {
   ) {}
   alunos: Aluno[] = [];
   ngOnInit(): void {
+    console.log('heree');
     this.alunos = this.listarTodos();
   }
-  listarTodos(): Aluno[] {
-    return this.alunoService.listarTodos();
+  listarTodos(filter?: string): Aluno[] {
+    this.alunoService.listarTodos(filter).subscribe({
+      next: (data: Aluno[] | null) => {
+        if (data == null) {
+          this.alunos = [];
+        } else {
+          this.alunos = data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    return this.alunos;
   }
   filtrarAlunos(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -26,19 +39,24 @@ export class ListarAlunoComponent {
     if (filtroParaNome === '') {
       this.alunos = this.listarTodos();
     } else {
-      this.alunos = this.listarTodos().filter((aluno) =>
-        aluno.nome?.toLocaleLowerCase()?.includes(filtroParaNome.toLowerCase())
-      );
+      this.alunos = this.listarTodos(filtroParaNome);
     }
   }
   removerAluno(aluno: Aluno) {
-    this.alunoService.remover(aluno.id!);
+    this.alunoService.remover(aluno.id!).subscribe({
+      complete: () => {
+        this.listarTodos();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
     Swal.fire({
       title: 'Removido(a)!',
       text: 'O(A) aluno(a) selecionado(a) foi removido(a) da base de dados.',
       icon: 'success',
     });
-    this.alunos = this.alunoService.listarTodos();
   }
 
   alertaCofirmaRemoverAluno(nomeAluno: string): SweetAlertOptions {

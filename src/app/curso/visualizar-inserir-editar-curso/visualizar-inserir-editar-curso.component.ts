@@ -28,18 +28,23 @@ export class VisualizarInserirEditarCursoComponent {
       } else {
         this.isEdit = true;
       }
-      const fetchedCurso = this.cursoService.buscarPorId(+idParam);
-
-      if (fetchedCurso !== undefined) {
-        this.curso = fetchedCurso;
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Curso não encontrado.',
-        });
-        this.router.navigate(['/cursos']);
-      }
+      this.cursoService.buscarPorId(+idParam).subscribe({
+        next: (p) => {
+          if (p != null) {
+            this.curso = p;
+          } else {
+            console.log('error');
+          }
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Curso não encontrado.',
+          });
+          this.router.navigate(['/cursos']);
+        },
+      });
     } else {
       this.isEdit = false;
       this.isViewMode = false;

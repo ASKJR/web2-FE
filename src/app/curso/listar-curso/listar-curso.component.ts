@@ -19,7 +19,19 @@ export class ListarCursoComponent {
     this.cursos = this.listarTodos();
   }
   listarTodos(): Curso[] {
-    return this.cursoService.listarTodos();
+    this.cursoService.listarTodos().subscribe({
+      next: (data: Curso[] | null) => {
+        if (data == null) {
+          this.cursos = [];
+        } else {
+          this.cursos = data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    return this.cursos;
   }
   filtrarAlunos(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -32,14 +44,21 @@ export class ListarCursoComponent {
       );
     }
   }
-  removerCurso(aluno: Curso) {
-    this.cursoService.remover(aluno.id!);
+  removerCurso(curso: Curso) {
+    this.cursoService.remover(curso.id!).subscribe({
+      complete: () => {
+        this.listarTodos();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
     Swal.fire({
       title: 'Removido!',
       text: 'O curso selecionando foi removido da base de dados.',
       icon: 'success',
     });
-    this.cursos = this.cursoService.listarTodos();
   }
 
   alertaCofirmaRemoverCurso(nomeCurso: string): SweetAlertOptions {
