@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { convertDBDateToString } from '../shared';
+import { Aluno, convertDBDateToString, Curso } from '../shared';
 
 @Component({
   selector: 'app-modal',
@@ -16,8 +16,18 @@ export class ModalComponent {
     let modalTextContent = '';
     Object.entries(this.object).forEach(([key, value]) => {
       let property = `${key.charAt(0).toLocaleUpperCase()}${key.slice(1)}`;
-      if (property == 'Nascimento') {
+      if (property == 'Nascimento' || property == 'DataMatricula') {
+        if (property == 'DataMatricula') {
+          property = 'Data matricula';
+        }
         value = convertDBDateToString(value);
+      }
+      if (property == 'Aluno') {
+        value = (value as Aluno).nome;
+      }
+
+      if (property == 'Curso') {
+        value = (value as Curso).nome;
       }
       modalTextContent += `<p><b>${property}</b>: ${value}</p>`;
     });

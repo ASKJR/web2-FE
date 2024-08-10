@@ -1,1 +1,80 @@
-<p>visualizar-inserir-editar-matricula works!</p>
+<h1>{{ isEdit ? "Editar" : isViewMode ? "Visualizar" : "Novo" }} Curso</h1>
+<hr />
+<div class="well">
+  <form #formCurso="ngForm">
+    <div class="form-group">
+      <label for="nome">Nota:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="nome"
+        name="nota"
+        required
+        placeholder="Digite a nota do aluno..."
+        [disabled]="isViewMode"
+        [(ngModel)]="matricula.nota"
+        #nota="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="nota.errors && (nota.dirty || nota.touched)"
+      >
+        <div [hidden]="!nota.errors['required']">Digite a nota do aluno.</div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="nome">Data Matricula:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="dataMatricula"
+        name="dataMatricula"
+        mask="d0/M0/0000"
+        [dropSpecialCharacters]="false"
+        required
+        placeholder="Digite a data da matricula no formato dd/MM/yyyy..."
+        [(ngModel)]="matricula.dataMatricula"
+        [disabled]="isViewMode"
+        autocomplete="off"
+        minlength="8"
+        #dataMatricula="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          dataMatricula.errors && (dataMatricula.dirty || dataMatricula.touched)
+        "
+      >
+        <div [hidden]="!dataMatricula.errors['required']">
+          Digite a data da matricula.
+        </div>
+        <div [hidden]="!dataMatricula.errors['minlength']">
+          A data precisa ter no mínimo 8 caracteres.
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <div class="row gx-2 gy-2">
+        <div class="col-auto">
+          <button
+            *ngIf="!isViewMode"
+            type="button"
+            class="btn btn-primary"
+            (click)="handleClik()"
+            [disabled]="!formCurso.form.valid"
+          >
+            <i class="fa fa-save" aria-hidden="true"></i>
+            {{ isEdit ? "Atualizar" : "Salvar" }}
+          </button>
+        </div>
+        <div class="col-auto">
+          <a [routerLink]="['/cursos']" class="btn btn-secondary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
