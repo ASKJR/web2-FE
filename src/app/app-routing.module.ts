@@ -14,6 +14,13 @@ const routes: Routes = [
       import('../app/curso/curso.module').then((m) => m.CursoModule),
   },
   {
+    path: 'matriculas',
+    loadChildren: () =>
+      import('../app/matricula/matricula.module').then(
+        (m) => m.MatriculaModule
+      ),
+  },
+  {
     path: '',
     redirectTo: 'alunos',
     pathMatch: 'full',
