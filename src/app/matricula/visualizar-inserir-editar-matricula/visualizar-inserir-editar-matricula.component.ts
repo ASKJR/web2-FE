@@ -1,6 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Matricula } from '../../shared';
+import {
+  Aluno,
+  convertDBDateToString,
+  convertStringToDBDate,
+  Curso,
+  Matricula,
+} from '../../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudServiceService } from '../../service/crud-service.service';
 import Swal from 'sweetalert2';
@@ -14,13 +20,19 @@ export class VisualizarInserirEditarMatriculaComponent {
   matricula: Matricula = new Matricula();
   isEdit: boolean = false;
   isViewMode: boolean = false;
+  alunos: Aluno[] = [];
+  cursos: Curso[] = [];
 
   constructor(
     private matriculaService: CrudServiceService<Matricula>,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    @Inject('AlunoCrudService') private alunoService: CrudServiceService<Aluno>,
+    @Inject('CursoCrudService') private cursoService: CrudServiceService<Curso>
   ) {}
   ngOnInit(): void {
+    this.alunos = this.listarAlunos();
+    this.cursos = this.listarCursos();
     const idParam = this.activatedRoute.snapshot.params['id'];
     if (idParam) {
       if (this.router.url.includes('visualizar')) {
@@ -29,9 +41,10 @@ export class VisualizarInserirEditarMatriculaComponent {
         this.isEdit = true;
       }
       this.matriculaService.buscarPorId(+idParam).subscribe({
-        next: (p) => {
-          if (p != null) {
-            this.matricula = p;
+        next: (m) => {
+          if (m != null) {
+            m.dataMatricula = convertDBDateToString(m.dataMatricula!);
+            this.matricula = m;
           } else {
             console.log('error');
           }
@@ -40,7 +53,7 @@ export class VisualizarInserirEditarMatriculaComponent {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Matricula não encontrado.',
+            text: 'Matricula não encontrada.',
           });
           this.router.navigate(['/matriculas']);
         },
@@ -49,6 +62,38 @@ export class VisualizarInserirEditarMatriculaComponent {
       this.isEdit = false;
       this.isViewMode = false;
     }
+  }
+
+  listarAlunos(filter?: string): Aluno[] {
+    this.alunoService.listarTodos(filter).subscribe({
+      next: (data: Aluno[] | null) => {
+        if (data == null) {
+          this.alunos = [];
+        } else {
+          this.alunos = data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    return this.alunos;
+  }
+
+  listarCursos(filter?: string): Curso[] {
+    this.cursoService.listarTodos(filter).subscribe({
+      next: (data: Curso[] | null) => {
+        if (data == null) {
+          this.cursos = [];
+        } else {
+          this.cursos = data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    return this.cursos;
   }
   handleClik(): void {
     if (this.isEdit) {
@@ -59,11 +104,14 @@ export class VisualizarInserirEditarMatriculaComponent {
   }
   inserir(): void {
     if (this.formMatricula.form.valid) {
+      this.matricula.dataMatricula = convertStringToDBDate(
+        this.matricula.dataMatricula!
+      );
       this.matriculaService.inserir(this.matricula!).subscribe({
         next: (_matricula) => {
           Swal.fire({
             title: 'Sucesso',
-            text: 'O Matricula foi criado na base de dados.',
+            text: 'A Matricula foi criada na base de dados.',
             icon: 'success',
           });
         },
@@ -89,6 +137,9 @@ export class VisualizarInserirEditarMatriculaComponent {
   }
   editar(): void {
     if (this.formMatricula.valid) {
+      this.matricula.dataMatricula = convertStringToDBDate(
+        this.matricula.dataMatricula!
+      );
       this.matriculaService.atualizar(this.matricula!).subscribe({
         next: (_matricula) => {
           Swal.fire({

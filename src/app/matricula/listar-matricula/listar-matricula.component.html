@@ -38,7 +38,7 @@
         <td>{{ matricula.aluno!.nome }}</td>
         <td>{{ matricula.curso!.nome }}</td>
         <td>{{ matricula.nota! }}</td>
-        <td>{{ matricula.dataMatricula! }}</td>
+        <td>{{ matricula.dataMatricula! | date : "dd/MM/yyyy" }}</td>
         <td style="width: 350px">
           <div class="row gx-2 gy-2">
             <div class="col-auto">

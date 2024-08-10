@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [AppComponent, ModalComponent],
   imports: [
@@ -13,6 +14,7 @@ import { ModalComponent } from './modal/modal.component';
     SweetAlert2Module.forRoot(),
     NgbModule,
     NgbDropdownModule,
+    NgSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -60,7 +60,7 @@ export class ListarMatriculaComponent {
 
   alertaCofirmaRemoverMatricula(nomeMatricula: string): SweetAlertOptions {
     return {
-      title: `Você realmente deseja remover a matricula ${nomeMatricula}?`,
+      title: `Você realmente deseja remover a matricula do Aluno(a) ${nomeMatricula}?`,
       text: 'Não será possível reverter essa ação.',
       icon: 'warning',
       showCancelButton: true,

@@ -11,8 +11,13 @@ import {
   Matricula,
   MATRICULA_LOCAL_STORAGE_KEY,
   localStorageKey,
+  ALUNO_LOCAL_STORAGE_KEY,
+  Aluno,
+  CURSO_LOCAL_STORAGE_KEY,
+  Curso,
 } from '../shared';
 import { HttpClient } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,7 @@ import { HttpClient } from '@angular/common/http';
     SweetAlert2Module.forChild(),
     NgxMaskDirective,
     NgxMaskPipe,
+    NgSelectModule,
   ],
   providers: [
     {
@@ -37,6 +43,26 @@ import { HttpClient } from '@angular/common/http';
       useFactory: (key: localStorageKey, httpClient: HttpClient) =>
         new CrudServiceService<Matricula>(key, httpClient),
       deps: [MATRICULA_LOCAL_STORAGE_KEY, HttpClient],
+    },
+    {
+      provide: ALUNO_LOCAL_STORAGE_KEY,
+      useValue: 'alunos',
+    },
+    {
+      provide: 'AlunoCrudService',
+      useFactory: (key: localStorageKey, httpClient: HttpClient) =>
+        new CrudServiceService<Aluno>(key, httpClient),
+      deps: [ALUNO_LOCAL_STORAGE_KEY, HttpClient],
+    },
+    {
+      provide: CURSO_LOCAL_STORAGE_KEY,
+      useValue: 'cursos',
+    },
+    {
+      provide: 'CursoCrudService',
+      useFactory: (key: localStorageKey, httpClient: HttpClient) =>
+        new CrudServiceService<Curso>(key, httpClient),
+      deps: [CURSO_LOCAL_STORAGE_KEY, HttpClient],
     },
     provideNgxMask(),
   ],

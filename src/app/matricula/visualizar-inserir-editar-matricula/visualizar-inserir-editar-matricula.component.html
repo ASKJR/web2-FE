@@ -1,7 +1,45 @@
-<h1>{{ isEdit ? "Editar" : isViewMode ? "Visualizar" : "Novo" }} Curso</h1>
+<h1>{{ isEdit ? "Editar" : isViewMode ? "Visualizar" : "Novo" }} Matricula</h1>
 <hr />
 <div class="well">
-  <form #formCurso="ngForm">
+  <form #formMatricula="ngForm">
+    <div class="form-group">
+      <label for="nome">Aluno:</label>
+      <ng-select
+        name="aluno"
+        [items]="alunos"
+        bindLabel="nome"
+        required
+        [(ngModel)]="matricula.aluno"
+        placeholder="Selecionar um aluno"
+        #aluno="ngModel"
+      >
+      </ng-select>
+      <div
+        class="alert alert-danger"
+        *ngIf="aluno.errors && (aluno.dirty || aluno.touched)"
+      >
+        <div [hidden]="!aluno.errors['required']">Selecione um aluno.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="nome">Curso:</label>
+      <ng-select
+        name="curso"
+        [items]="cursos"
+        bindLabel="nome"
+        required
+        [(ngModel)]="matricula.curso"
+        placeholder="Selecionar um curso"
+        #curso="ngModel"
+      >
+      </ng-select>
+      <div
+        class="alert alert-danger"
+        *ngIf="curso.errors && (curso.dirty || curso.touched)"
+      >
+        <div [hidden]="!curso.errors['required']">Selecione um curso.</div>
+      </div>
+    </div>
     <div class="form-group">
       <label for="nome">Nota:</label>
       <input
@@ -37,7 +75,7 @@
         [(ngModel)]="matricula.dataMatricula"
         [disabled]="isViewMode"
         autocomplete="off"
-        minlength="8"
+        minlength="10"
         #dataMatricula="ngModel"
       />
       <div
@@ -50,7 +88,7 @@
           Digite a data da matricula.
         </div>
         <div [hidden]="!dataMatricula.errors['minlength']">
-          A data precisa ter no mínimo 8 caracteres.
+          A data precisa ter no mínimo 10 caracteres.
         </div>
       </div>
     </div>
@@ -63,14 +101,14 @@
             type="button"
             class="btn btn-primary"
             (click)="handleClik()"
-            [disabled]="!formCurso.form.valid"
+            [disabled]="!formMatricula.form.valid"
           >
             <i class="fa fa-save" aria-hidden="true"></i>
             {{ isEdit ? "Atualizar" : "Salvar" }}
           </button>
         </div>
         <div class="col-auto">
-          <a [routerLink]="['/cursos']" class="btn btn-secondary">
+          <a [routerLink]="['/matriculas']" class="btn btn-secondary">
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
           </a>
         </div>
