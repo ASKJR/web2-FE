@@ -59,22 +59,59 @@ export class VisualizarInserirEditarCursoComponent {
   }
   inserir(): void {
     if (this.formCurso.form.valid) {
-      this.cursoService.inserir(this.curso);
-      Swal.fire({
-        title: 'Sucesso',
-        text: 'O Curso foi criado na base de dados.',
-        icon: 'success',
+      this.cursoService.inserir(this.curso!).subscribe({
+        next: (_curso) => {
+          Swal.fire({
+            title: 'Sucesso',
+            text: 'O Curso foi criado na base de dados.',
+            icon: 'success',
+          });
+        },
+        error: (err) => {
+          if (err.status == 409) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Curso já existente.',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `[${err.status}] ${err.message}`,
+            });
+          }
+        },
       });
+
       this.router.navigate(['/cursos']);
     }
   }
   editar(): void {
     if (this.formCurso.valid) {
-      this.cursoService.atualizar(this.curso);
-      Swal.fire({
-        title: 'Sucesso',
-        text: 'Suas alterações foram salvas na base de dados.',
-        icon: 'success',
+      this.cursoService.atualizar(this.curso!).subscribe({
+        next: (_curso) => {
+          Swal.fire({
+            title: 'Sucesso',
+            text: 'Suas alterações foram salvas na base de dados.',
+            icon: 'success',
+          });
+        },
+        error: (err) => {
+          if (err.status == 409) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Curso já existente.',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `[${err.status}] ${err.message}`,
+            });
+          }
+        },
       });
       this.router.navigate(['/cursos']);
     }

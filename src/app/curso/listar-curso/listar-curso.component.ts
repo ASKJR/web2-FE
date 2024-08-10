@@ -4,7 +4,6 @@ import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { CrudServiceService } from '../../service/crud-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../modal/modal.component';
-
 @Component({
   selector: 'app-listar-curso',
   templateUrl: './listar-curso.component.html',
@@ -18,8 +17,8 @@ export class ListarCursoComponent {
   ngOnInit(): void {
     this.cursos = this.listarTodos();
   }
-  listarTodos(): Curso[] {
-    this.cursoService.listarTodos().subscribe({
+  listarTodos(filter?: string): Curso[] {
+    this.cursoService.listarTodos(filter).subscribe({
       next: (data: Curso[] | null) => {
         if (data == null) {
           this.cursos = [];
@@ -33,15 +32,13 @@ export class ListarCursoComponent {
     });
     return this.cursos;
   }
-  filtrarAlunos(event: Event): void {
+  filtrarCursos(event: Event): void {
     const input = event.target as HTMLInputElement;
     const filtroParaNome = input.value;
     if (filtroParaNome === '') {
       this.cursos = this.listarTodos();
     } else {
-      this.cursos = this.listarTodos().filter((aluno) =>
-        aluno.nome?.toLocaleLowerCase()?.includes(filtroParaNome.toLowerCase())
-      );
+      this.cursos = this.listarTodos(filtroParaNome);
     }
   }
   removerCurso(curso: Curso) {
@@ -56,7 +53,7 @@ export class ListarCursoComponent {
 
     Swal.fire({
       title: 'Removido!',
-      text: 'O curso selecionando foi removido da base de dados.',
+      text: 'O curso selecionado foi removido da base de dados.',
       icon: 'success',
     });
   }
@@ -73,7 +70,6 @@ export class ListarCursoComponent {
       confirmButtonText: 'Sim, remover!',
     };
   }
-
   abrirCursoModal(curso: Object) {
     const modalRef = this.modalService.open(ModalComponent);
     modalRef.componentInstance.object = curso;

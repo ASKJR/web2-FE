@@ -15,7 +15,6 @@ export class ListarAlunoComponent {
   ) {}
   alunos: Aluno[] = [];
   ngOnInit(): void {
-    console.log('heree');
     this.alunos = this.listarTodos();
   }
   listarTodos(filter?: string): Aluno[] {
