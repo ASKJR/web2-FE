@@ -6,7 +6,7 @@ import { catchError, map, Observable, throwError, of } from 'rxjs';
   providedIn: 'root',
 })
 export class CrudServiceService<T extends Iidentification> implements ICrud<T> {
-  BASE_URL = 'http://localhost:8080/';
+  BASE_URL = 'https://web2-api.albertokato.com/';
   httpOptions = {
     observe: 'response' as 'response',
     headers: new HttpHeaders({

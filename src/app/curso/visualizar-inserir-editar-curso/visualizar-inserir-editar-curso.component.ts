@@ -82,9 +82,10 @@ export class VisualizarInserirEditarCursoComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/cursos']);
+        },
       });
-
-      this.router.navigate(['/cursos']);
     }
   }
   editar(): void {
@@ -112,8 +113,10 @@ export class VisualizarInserirEditarCursoComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/cursos']);
+        },
       });
-      this.router.navigate(['/cursos']);
     }
   }
 }

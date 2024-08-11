@@ -130,9 +130,10 @@ export class VisualizarInserirEditarMatriculaComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/matriculas']);
+        },
       });
-
-      this.router.navigate(['/matriculas']);
     }
   }
   editar(): void {
@@ -163,8 +164,10 @@ export class VisualizarInserirEditarMatriculaComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/matriculas']);
+        },
       });
-      this.router.navigate(['/matriculas']);
     }
   }
 }

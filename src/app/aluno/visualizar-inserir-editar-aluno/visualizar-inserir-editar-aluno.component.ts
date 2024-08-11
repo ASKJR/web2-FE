@@ -119,9 +119,10 @@ export class VisualizarInserirEditarAlunoComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/alunos']);
+        },
       });
-
-      this.router.navigate(['/alunos']);
     }
   }
   editar(): void {
@@ -151,8 +152,10 @@ export class VisualizarInserirEditarAlunoComponent {
             });
           }
         },
+        complete: () => {
+          this.router.navigate(['/alunos']);
+        },
       });
-      this.router.navigate(['/alunos']);
     }
   }
 }
