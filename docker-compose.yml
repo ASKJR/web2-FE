@@ -2,9 +2,9 @@ version: "2"
 
 services:
   web2-FE:
-    container_name: web.web2-FE
+    container_name: web.web2
     environment:
-      - VIRTUAL_HOST=web2-FE.albertokato.com
+      - VIRTUAL_HOST=web2.albertokato.com
       - VIRTUAL_PORT=80
     build:
       context: .
