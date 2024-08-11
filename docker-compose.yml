@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  web2-FE:
+  web2:
     container_name: web.web2
     environment:
       - VIRTUAL_HOST=web2.albertokato.com
